@@ -31,6 +31,7 @@ Data yang akan digunakan untuk project ini adalah data dari Kaggle yang berisi m
 Dataset ini terdiri dari 9 skema dataset, diantaranya:
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/426dec64-f6c4-4df4-8f1d-fd7f945f1e91)
+
 Gambar 1. Skema dataset *e-commerce Olist*
 
 1. olist_customers_dataset.csv --> berisi data-data pelanggan secara detail. Terdiri dari 99.441 baris dan 5 kolom. Berikut adalah deskripsi tiap kolomnya:
@@ -109,6 +110,7 @@ Secara umum, kondisi data sudah bersih dari data duplikat, walau jika dieksplora
 Pada dataset *olist_order_customers_dataset.csv* (selanjutnya akan ditulis dataset customer) memiliki kolom kode pos, kota, dan negara bagian dari konsumen. Namun pada proyek ini, hanya akan digunakan informasi kota konsumen saja. Sehingga datset customer ini tersisa 3 kolom, yaitu *customer_id*, *customer_unique_id*, dan *customer_city*. Terdapat 96096 pelanggan unik yang tersebar di 4119 kota.
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/0f667060-5439-412a-862c-a2a05d02cbd0)
+
 Gambar 2. Top 10 kota dengan pembeli terbanyak
 
 Kemudian pada dataset *olist_order_items_dataset.csv* (selanjutnya akan ditulis dataset order item) memiliki total 6 kolom, dengan jumlah nilai unik sebagai berikut:
@@ -140,16 +142,19 @@ Skor review yang ada pada dataset ini adalah dalam rentang 1 sampai dengan 5 dan
 Keempat, pada dataset *olist_orders_dataset.csv* (selanjutnya akan dituis dataset orders) memiliki 8 kolom dengan cukup banyak nilai yang hilang pada kolom *order_approved_at*, *order_delivered_carrier_date*, dan *order_delivered_customer_date* karena bisa saja kondisi ketika data ini diambil, terdapat status pembelian yang menyebabkan data pada kolom tersebut masih kosong. Namun untungmya, kolom tersebut tidak terpakai untuk membuat sistem rekomendasi, sehingga akan dihapus. Kemudian, untuk membuat sistem rekomendasi pada proyek ini juga hanya akan menggunakan data dengan status order sudah selesai atau *delivered*.
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/c33dc43f-93d8-403d-9835-cccb972db8f7)
+
 Gambar 3. Jumlah status pesanan
 
 Kelima, dataset *olist_seller_dataset.csv* (selanjutnya akan ditulis dataset seller) kondisinya sudah sangat bersih. Sama seperti dataset customer, informasi seller juga hanya akan menggunakan informasi kota saja. Terdapat total 3095 penjual yang tersebar di 611 kota.
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/15737acf-b07e-4316-98fe-bf427d56c6dc)
+
 Gambar 4. Top 10 kota dengan penjual terbanyak
 
 Terakhir, dataset *olist_products_dataset.csv* yang berisi data informasi produk dan *product_category_name_translation.csv* sebagai kamus nama kategori produk dari Bahasa Portugis ke Bahasa Inggris. Sayangnya, dataset produk ini tidak memiliki nama produk dan deskripsi produk yang eksplisit. Sehingga sistem rekomendasi yang akan dibuat akan digunakan *product_id* untuk menunjukan produk tertentu. Terdapat 73 kategori produk pada dataset ini.
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/a4a0da60-3ae4-44a7-a214-bfbd1165dcfe)
+
 Gambar 5. Top 10 kategori produk
 
 ## Data Preparation
@@ -193,7 +198,7 @@ Pertama, membangun matriks TF-IDF dari kategori produk. Matriks ini akan merepre
 
 Setelah matriks TF-IDF terbentuk, langkah berikutnya adalah menghitung cosine similarity antara setiap pasangan produk. Cosine similarity mengukur kesamaan antara dua vektor dengan mengukur sudut antara vektor-vektor tersebut. Semakin kecil sudut antara vektor-vektor, semakin mirip produk-produk tersebut. Untuk menghitung cosine similarity, dapat digunakan formula cosine similarity:
 
-$$ cosine_similarity = {{A . B} \over {||A|| ||B||}} $$
+$$ cosine similarity = {{A . B} \over {||A|| ||B||}} $$
 
 Dengan menghitung cosine similarity antara semua pasangan produk, kita dapat memperoleh matriks similarity antara produk-produk dalam dataset. Nilai cosine similarity ini dapat digunakan untuk menemukan produk-produk yang paling mirip satu sama lain. Semakin tinggi nilai cosine similarity antara dua produk, semakin mirip kedua produk tersebut.
 
