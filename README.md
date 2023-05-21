@@ -285,7 +285,14 @@ Dari nilai metrik evaluasi terlihat model memiliki kemampuan rekomendasi yang ba
 Namun untuk pendekatan *collaborative filtering*, memang terlihat bahwa produk yang direkomendasikan cukup campur-campur. Karena tujuan dari pendekatan ini tidak hanya mencari produk dengan kategori yang sama, tetapi juga kategori lainnya yang kemungkinan disukai oleh pengguna. Ini menjadi kelebihan pendekatan *collaborative filtering* yang bisa menemukan produk lain yang mungkin sebelumnya kita belum ketahui, tetapi mungkin kita akan menyukainya. Kelemahannya adalah rekomendasi yang diberikan bisa jadi sedikit *random* karena produk yang direkomendasikan adalah berdasarkan tren yang sedang disukai pengguna lain.
 
 ## Conclusion
-Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan nilai evaluasi precision hingga 100% pada contoh 3 produk yang diuji. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353. Namun ketika dicoba dengan contoh pengguna tertentu, rekomendasi yang diberikan terlihat cukup beragam.
+Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering.
+
+Pada Content-Based Filtering, sistem berhasil memberikan nilai evaluasi precision hingga 100% pada contoh 3 pencarian produk yang diuji.
+
+Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353 dan ketika diuji kepada pengguna, produk yang direkomendasikan beragam berdasarkan tren dari pengguna lain yang memiliki historis minat yang sama.
+
+## Suggestion
+Untuk membuat sistem rekomendasi ini lebih baik, dapat digunakan fitur-fitur yang lebih kompleks untuk membuat prediksi rekomendasi. Selain itu, dapat digunakan pula metode sistem rekomendasi yang lebih modern yang dapat membaca berbagai jenis fitur, seperti teks, gambar, hingga video.
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
