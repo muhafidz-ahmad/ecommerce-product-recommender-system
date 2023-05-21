@@ -255,7 +255,7 @@ Kelebihan dari pendekatan ini adalah kemampuannya dalam menemukan pola preferens
 
 Output dari pendekatan ini adalah daftar produk rekomendasi untuk setiap pelanggan. Misalnya, pelanggan B akan menerima rekomendasi berupa daftar produk yang banyak disukai oleh pelanggan lain dengan preferensi yang serupa.
 
-Tabel 4. Top 10 rekomendasi dari salah satu pengguna.
+Tabel 3. Top 10 rekomendasi dari salah satu pengguna.
 
 | product       | product_category_name    | seller_id     |
 | -----------   | -----------------  | ---------   |
