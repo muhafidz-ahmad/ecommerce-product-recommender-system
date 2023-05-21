@@ -207,27 +207,30 @@ Output dari pendekatan ini adalah daftar produk rekomendasi untuk setiap pelangg
 
 Berikut ini adalah contoh top 10 rekomendasi dari salah satu pengguna.
 
-1 . product_9949 	: furniture_decor | seller_443
-2 . product_5630 	: fixed_telephony | seller_1043
-3 . product_31762 	: small_appliances | seller_2915
-4 . product_29040 	: stationery | seller_1787
-5 . product_11817 	: health_beauty | seller_1210
-6 . product_16087 	: stationery | seller_668
-7 . product_21496 	: fashion_bags_accessories | seller_1277
-8 . product_7408 	: housewares | seller_1815
-9 . product_8130 	: baby | seller_434
-10 . product_9125 	: stationery | seller_157
+1. product_9949 	: furniture_decor | seller_443
+2. product_5630 	: fixed_telephony | seller_1043
+3. product_31762 	: small_appliances | seller_2915
+4. product_29040 	: stationery | seller_1787
+5. product_11817 	: health_beauty | seller_1210
+6. product_16087 	: stationery | seller_668
+7. product_21496 	: fashion_bags_accessories | seller_1277
+8. product_7408 	: housewares | seller_1815
+9. product_8130 	: baby | seller_434
+10. product_9125 	: stationery | seller_157
 
 ## Evaluation
-Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomendasi pada contoh di subbab sebelumnya.
+Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomendasi pada contoh di subbab sebelumnya. Contoh di atas adalah mencari rekomendasi produk dengan keyword *"product_3248"*. Dimana product tersebut memiliki kategori *bed_bath_table*, penjual *seller_2174*, harga 24.9, skor review 3.9, dan jumlah terjual sebanyak 7 buah. Hasil rekomendasi dari *keyword* di atas diperoleh 5 rekomendasi dengan kategori produk yang sama. Sistem rekomendasi dengan Content-Based Filtering sudah berjalan dengan baik.
 
 Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
 
-$$ RMSE = \sqrt{\sum_{i=1}_{n} {\hat{y}_{i} - y_{i}}^{2} \over {n}} $$
+$$ RMSE = \sqrt{\sum_{i=1}^{n} {\hat{y}i - yi}}^{2} \over {n}} $$
 
 Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagaim berikut:
 * *root_mean_squared_error* : 0.0427
 * *val_root_mean_squared_error* : 0.3353
+
+## Conclusion
+
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
