@@ -4,7 +4,9 @@
 
 Saat ini telah banyak sekali barang-barang yang dijual di *e-commerce*. Tak jarang barang-barang tersebut terdapat barang yang dijual oleh seorang penipu yang dapat merugikan konsumen. Oleh karena itu, pemilik *platform e-commerce* perlu memberikan rasa aman dan rasa nyaman kepada para konsumen dengan memfilter barang-barang yang direkomendasikan kepada user.
 
-Selain itu, pemilik e-commerce juga perlu sebuah sistem rekomendasi yang dapat merekomendasikan barang yang sesuai dengan yang pembeli butuhkan atau pembeli inginkan. Hal ini bertujuan untuk memberikan kemudahan kepada pengguna, dan tentunya meningkatkan *trafic* dan transaksi di platform *e-commerce* tersebut.
+Selain itu, pemilik e-commerce juga perlu sebuah sistem rekomendasi yang dapat merekomendasikan barang yang sesuai dengan yang pembeli butuhkan atau pembeli inginkan. Hal ini bertujuan untuk memberikan kemudahan kepada pengguna, dan tentunya meningkatkan *trafic* dan transaksi di platform *e-commerce* tersebut. Sebagai pembeli, sistem rekomendasi dapat memberikan kemudahan bagi pembeli untuk menemukan produk yang sesuai dengan yang kita inginkan. Sebagai penjual, bisa dibilang sistem rekomendasi ini dapat mengiklankan produknya secara tepat kepada orang-orang yang benar-benar membutuhkan atau menginginkan produk tersebut.
+
+Terdapat dua pendekatan yang umum digunakan untuk membuat sistem rekomendasi, yaitu *content-based filtering* dan *collaborative filtering*. *Content-based filtering* sangat berguna untuk diterapkan pada fitur _search engine e-commerce_. Karena *content-based filtering* ini mengandalkan _keyword_ untuk bisa memperoleh rekomendasi produk yang relevan. *Collaborative filtering* sangat berguna untuk diterapkan kepada setiap pengguna sehingga pengguna bisa dengan cepat menemukan produk yang mungkin relevan dan sedang diinginkan oleh pembeli tanpa perlu menggunakan fitur _search engine_.
 
 Sistem rekomendasi di *ecommerce* telah beberapa kali dilakukan penelitian, terutama dengan yang berdasarkan big data [1]. Salah satu penelitian terbaru dalam pengembangan sistem rekomendasi ini adalah dengan menggunakan *AutoML* [2].
 
