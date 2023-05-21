@@ -223,7 +223,7 @@ Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomenda
 
 Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
 
-$$ RMSE = \sqrt{\sum_{i=1}^{n} {\hat{y}i - yi}^{2} \over {n}} $$
+$$ RMSE = \sqrt{\sum_{i=1}^{n} ({\hat{y}i - yi})^{2} \over {n}} $$
 
 Dimana:
 * y topi = rating prediksi
