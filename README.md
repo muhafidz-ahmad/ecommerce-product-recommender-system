@@ -223,14 +223,19 @@ Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomenda
 
 Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
 
-$$ RMSE = \sqrt{\sum_{i=1}^{n} {\hat{y}i - yi}}^{2} \over {n}} $$
+$$ RMSE = \sqrt{\sum_{i=1}^{n} {\hat{y}i - yi}^{2} \over {n}} $$
+
+Dimana:
+* y topi = rating prediksi
+* y = rating sebenarnya
+* n = jumlah data
 
 Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagaim berikut:
 * *root_mean_squared_error* : 0.0427
 * *val_root_mean_squared_error* : 0.3353
 
 ## Conclusion
-
+Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan 5 rekomendasi produk dengan kategori yang sama. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353 yang merupakan nilai yang cukup bagus.
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
