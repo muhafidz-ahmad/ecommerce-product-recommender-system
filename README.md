@@ -176,7 +176,17 @@ Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan 
 Proyek ini menyajikan dua solusi rekomendasi dengan menggunakan algoritma yang berbeda, yaitu *Content-Based Filtering* dan *Collaborative Filtering*.
 
 ### Content-Based Filtering
-Dalam pendekatan ini, digunakan metode TF-IDF dan Cosine Similarity untuk memperoleh rekomendasi yang relevan. Pertama, dilakukan pemrosesan teks pada kategori produk untuk menghasilkan matriks TF-IDF yang merupakan representasi numerik hubungan antara kategori produk dengan nama produk. Kemudian dihitung *cosine similarity* dari matriks TF-IDF dan menghasilkan *matrix similarity* yang merupakan representasi numerik kesamaan antar produk.
+Dalam pendekatan ini, digunakan metode TF-IDF dan Cosine Similarity untuk memperoleh rekomendasi yang relevan.
+
+Pertama, membangun matriks TF-IDF dari kategori produk. Matriks ini akan merepresentasikan setiap produk dalam dataset sebagai vektor numerik berdasarkan frekuensi kata dalam kategori produk tersebut. TF-IDF mengukur seberapa penting suatu kata dalam sebuah dokumen atau konteks. Nilai TF-IDF tinggi menunjukkan kata yang spesifik dan relevan untuk dokumen tersebut. Langkah pertama dalam pembangunan matriks TF-IDF adalah menghitung Term Frequency (TF), yaitu frekuensi kata dalam deskripsi produk. Selanjutnya, perlu dihitung Inverse Document Frequency (IDF), yaitu kebalikan dari frekuensi kata di seluruh dokumen. Ini mengurangi bobot kata-kata yang umum dan meningkatkan bobot kata-kata yang jarang muncul. Akhirnya, matriks TF-IDF terbentuk dengan mengalikan nilai TF dengan nilai IDF. Matriks ini akan menjadi representasi numerik dari kategori produk dalam dataset.
+
+Setelah matriks TF-IDF terbentuk, langkah berikutnya adalah menghitung cosine similarity antara setiap pasangan produk. Cosine similarity mengukur kesamaan antara dua vektor dengan mengukur sudut antara vektor-vektor tersebut. Semakin kecil sudut antara vektor-vektor, semakin mirip produk-produk tersebut. Untuk menghitung cosine similarity, dapat digunakan formula cosine similarity:
+
+$$ cosine_similarity = {A . B} \over {||A|| ||B||} $$
+
+Dengan menghitung cosine similarity antara semua pasangan produk, kita dapat memperoleh matriks similarity antara produk-produk dalam dataset. Nilai cosine similarity ini dapat digunakan untuk menemukan produk-produk yang paling mirip satu sama lain. Semakin tinggi nilai cosine similarity antara dua produk, semakin mirip kedua produk tersebut.
+
+Dengan menggunakan metode TF-IDF dan Cosine Similarity dalam content-based filtering, kita dapat memperoleh rekomendasi produk yang memiliki kategori yang mirip dengan produk yang sedang ditinjau oleh pengguna. Hal ini memungkinkan sistem rekomendasi untuk mengidentifikasi dan merekomendasikan produk yang memiliki kesamaan konten dengan produk yang disukai oleh pengguna.
 
 Kelebihan dari pendekatan ini adalah kemampuannya dalam memberikan rekomendasi yang relevan berdasarkan konten produk, bahkan bisa menjangkau produk yang baru muncul. Namun kekurangannya adalah kurangnya kemampuan untuk menemukan preferensi pelanggan lain, dan baru bisa memberikan rekomendasi produk jika memang pengguna sedang melakukan pencarian dengan keyword.
 
