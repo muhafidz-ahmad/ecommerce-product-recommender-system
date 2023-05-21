@@ -15,8 +15,7 @@ Banyaknya produk pilihan di *e-commerce* menjadi kelebihan sekaligus hambatan ke
 Tujuan dari proyek ini adalah mengembangkan sistem rekomendasi produk e-commerce. Masalah yang ingin diselesaikan adalah bagaimana memberikan rekomendasi produk yang relevan dan personal kepada konsumen, sehingga meningkatkan kepuasan konsumen dan memperoleh peningkatan penjualan.
 
 ### Goals
-* Meningkatkan pengalaman belanja konsumen dengan memberikan rekomendasi produk yang relevan dengan preferensi mereka.
-* Meningkatkan penjualan dengan mendorong pelanggan untuk membeli produk yang disarankan.
+* Memberikan sistem rekomendasi produk yang relevan dengan preferensi pengguna.
 * Mengoptimalkan pemanfaatan data pelanggan dan produk yang ada dalam platform e-commerce.
 
 ### Solution Approach
@@ -174,7 +173,61 @@ Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digun
 Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan diganti dengan nilai 0 agar bisa dimasukan ke dalam perhitungan sistem rekomendasi.
 
 ## Model Development
+Proyek ini menyajikan dua solusi rekomendasi dengan menggunakan algoritma yang berbeda, yaitu *Content-Based Filtering* dan *Collaborative Filtering*.
 
+### Content-Based Filtering
+Dalam pendekatan ini, digunakan metode TF-IDF dan Cosine Similarity untuk memperoleh rekomendasi yang relevan. Pertama, dilakukan pemrosesan teks pada kategori produk untuk menghasilkan matriks TF-IDF yang merupakan representasi numerik hubungan antara kategori produk dengan nama produk. Kemudian dihitung *cosine similarity* dari matriks TF-IDF dan menghasilkan *matrix similarity* yang merupakan representasi numerik kesamaan antar produk.
+
+Kelebihan dari pendekatan ini adalah kemampuannya dalam memberikan rekomendasi yang relevan berdasarkan konten produk, bahkan bisa menjangkau produk yang baru muncul. Namun kekurangannya adalah kurangnya kemampuan untuk menemukan preferensi pelanggan lain, dan baru bisa memberikan rekomendasi produk jika memang pengguna sedang melakukan pencarian dengan keyword.
+
+Output dari pendekatan Content-Based Filtering ini adalah daftar produk rekomendasi berdasarkan keyword yang dimasukan. Misalnya, pengguna aplikasi melakukan pencarian dengan keyword "bola", maka akan ditampilkan beberapa rekomendasi produk yang relevan dengan keyword "bola".
+
+Namun karena data yang digunakan pada proyek ini tidak memiliki nama produk, maka akan diberikan contoh dengan keyword "product_3248". Diperoleh top 5 rekomendasi produk berdasarkan keyword tersebut:
+
+Tabel 2. Top 5 rekomendasi dengan Content-Based Filtering
+
+| product_id    | product_category_name | seller_id   | price   | review_score | sold |
+| ----------    | --------------------- | ---------   | -----   | ------------ | ---- |
+| product_2147  | bed_bath_table        | seller_319  | 107.50  | 5.0 | 1 |
+| product_2348  | bed_bath_table        | seller_2250 | 34.99   | 4.0 | 1 |
+| product_27122 | bed_bath_table        | seller_35   | 146.99  | 5.0 | 1 |
+| product_19127 | bed_bath_table        | seller_1630 | 34.90   | 4.0 | 2 |
+| product_29998 | bed_bath_table        | seller_2340 | 52.99   | 4.0 | 1 |
+
+### Collaborative Filtering
+Digunakan model RecommerderNet berbasis TensorFlow untuk mempelajari pola preferensi pelanggan dan interaksi mereka dengan produk. Model ini menggunakan embedding untuk merepresentasikan pelanggan dan produk. Dengan menggabungkan embedding tersebut, kami dapat memprediksi preferensi pelanggan terhadap produk tertentu.
+
+Berbeda dengan pendekatan *Content-Based Filtering* yang hanya menggunakan data informasi tentang produk saja, pendekatan ini akan menggunakan data pelanggan juga.
+
+Dataset yang digunakan dibagi menjadi data traning dan data testing dengan rasio 80%:20%.
+
+Kelebihan dari pendekatan ini adalah kemampuannya dalam menemukan pola preferensi pelanggan yang kompleks dan merekomendasikan produk berdasarkan preferensi serupa dari pelanggan lain. Namun kekurangan dari pendekatan ini adalah adanya masalah *cold-start*, yaitu saat pelanggan baru atau produk baru tidak memiliki cukup interaksi untuk memberikan rekomendasi yang akurat.
+
+Output dari pendekatan ini adalah daftar produk rekomendasi untuk setiap pelanggan. Misalnya, pelanggan B akan menerima rekomendasi berupa daftar produk yang banyak disukai oleh pelanggan lain dengan preferensi yang serupa.
+
+Berikut ini adalah contoh top 10 rekomendasi dari salah satu pengguna.
+
+1 . product_9949 	: furniture_decor | seller_443
+2 . product_5630 	: fixed_telephony | seller_1043
+3 . product_31762 	: small_appliances | seller_2915
+4 . product_29040 	: stationery | seller_1787
+5 . product_11817 	: health_beauty | seller_1210
+6 . product_16087 	: stationery | seller_668
+7 . product_21496 	: fashion_bags_accessories | seller_1277
+8 . product_7408 	: housewares | seller_1815
+9 . product_8130 	: baby | seller_434
+10 . product_9125 	: stationery | seller_157
+
+## Evaluation
+Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomendasi pada contoh di subbab sebelumnya.
+
+Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
+
+$$ RMSE = \sqrt{\sum_{i=1}_{n} {\hat{y}_{i} - y_{i}}^{2} \over {n}} $$
+
+Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagaim berikut:
+* *root_mean_squared_error* : 0.0427
+* *val_root_mean_squared_error* : 0.3353
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
