@@ -12,13 +12,15 @@ Sistem rekomendasi di *ecommerce* telah beberapa kali dilakukan penelitian, teru
 
 ## Business Understanding
 ### Problem Statements
-Banyaknya produk pilihan di *e-commerce* menjadi kelebihan sekaligus hambatan ketika belanja. Dengan banyaknya pilihan, tentu konsumen ingin mendapatkan pilihan produk yang tepat dan relevan dengan preferensi mereka. Namun konsumen mungkin saja tidak memiliki banyak waktu untuk menjelajah seluruh produk-produk yang ada di *platform e-commerce*. 
-
-Tujuan dari proyek ini adalah mengembangkan sistem rekomendasi produk e-commerce. Masalah yang ingin diselesaikan adalah bagaimana memberikan rekomendasi produk yang relevan dan personal kepada konsumen, sehingga meningkatkan kepuasan konsumen dan memperoleh peningkatan penjualan.
+Dari kondisi yang telah dijelaskan di atas, akan dibuat sebuah sistem rekomendasi untuk menjawab permasalahan berikut:
+* Bagaimana cara memberikan rekomendasi produk yang relevan kepada pengguna berdasarkan preferensi dan perilaku mereka?
+* Bagaimana sistem rekomendasi dapat membantu meningkatkan pengalaman belanja pengguna dan mendorong penjualan?
+* Bagaimana kita dapat memanfaatkan informasi dari pengguna, produk, dan riwayat pembelian untuk menghasilkan rekomendasi yang personal dan akurat?
 
 ### Goals
-* Memberikan sistem rekomendasi produk yang relevan dengan preferensi pengguna.
-* Mengoptimalkan pemanfaatan data pelanggan dan produk yang ada dalam platform e-commerce.
+* Membuat sistem rekomendasi yang bisa memberikan rekomendasi produk yang relevan dengan preferensi pengguna.
+* Mengetahui kemampuan sistem rekomendasi dalam memberikan rekomendasi produk kepada pengguna.
+* Mengoptimalkan pemanfaatan data pelanggan dan produk yang ada dalam platform *e-commerce* untuk membuat sistem rekomendasi lebih akurat dan presisi.
 
 ### Solution Approach
 Untuk mencapai tujuan di atas, akan digunakan dua pendekatan dalam sistem rekomendasi kami, yaitu:
@@ -158,8 +160,9 @@ Terakhir, dataset *olist_products_dataset.csv* yang berisi data informasi produk
 Gambar 5. Top 10 kategori produk
 
 ## Data Preparation
+### 1. Content-Based Filtering
 Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pembuatan membaca nama produk dan seller karena nama produk dan seller tidak tersedia.
-### Data Preprocessing
+#### Data Preprocessing
 
 **Membuat Nama Produk dan Seller Buatan**
 * Nama produk dan *seller* akan dibuat dengan format *product_(number)* untuk nama produk, dan format *seller_(number)* untuk nama *seller*. 
@@ -177,7 +180,7 @@ Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pem
 **Respons Time Order**
 * Ditambahkanj juga kolom baru yang berisi informasi kecepatan *seller* dalam merespon sebuah pesanan.
 
-### Data Preparation
+#### Data Preparation
 Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digunakan untuk membuat sistem rekomendasi. Dataset ini memiliki total 6 kolom sebagai berikut:
 * product_id : id produk unik (string)
 * product_category_name : nama kategori produk (string)
@@ -187,6 +190,27 @@ Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digun
 * seller_id : id penjuan (string)
 
 Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan diganti dengan nilai 0 agar bisa dimasukan ke dalam perhitungan sistem rekomendasi.
+
+### Collaborative Filtering
+Data yang digunakan untuk membuat sistem rekomendasi menggunakan *collaborative filtering* merupakan gabungan dari beberapa skema data yang diperlukan dan menyisakan kolom-kolom berikut:
+* *product_id*
+* *seller_id*
+* *price*
+* *review_score*
+* *respons_time_order*
+* *customer_unique_id*
+* *customer_city*
+* *product_category_name*
+* *seller_city*
+* *sold*
+
+Setelah itu data ini dibersihkan dari data-data yang kosong dan diperoleh:
+* 91479 jumlah pelanggan unik
+* 31485 jumlah produk unik
+
+Kemudian, fitur-fitur yang akan digunakan untuk sistem rekomendasi akan di-encode ke dalam bentuk numerik. Adapun fitur-fitur yang digunakan untuk sistem rekomendasi pada proyek ini adalah *customer_unique_id* yang disimpan dalam kolom baru bernama *customer*, *product_id* yang disimpan dalam kolom baru bernama *product*, dan *review_score*.
+
+Terakhir data dipecah menjadi data *training* dan data *testing* dengan rasio 80%:20%. Fitur prediktor yang digunakan adalah *customer* dan *product*. Fitur targetnya adalah *review_score*.
 
 ## Model Development
 Proyek ini menyajikan dua solusi rekomendasi dengan menggunakan algoritma yang berbeda, yaitu *Content-Based Filtering* dan *Collaborative Filtering*.
@@ -231,18 +255,20 @@ Kelebihan dari pendekatan ini adalah kemampuannya dalam menemukan pola preferens
 
 Output dari pendekatan ini adalah daftar produk rekomendasi untuk setiap pelanggan. Misalnya, pelanggan B akan menerima rekomendasi berupa daftar produk yang banyak disukai oleh pelanggan lain dengan preferensi yang serupa.
 
-Berikut ini adalah contoh top 10 rekomendasi dari salah satu pengguna.
+Tabel 4. Top 10 rekomendasi dari salah satu pengguna.
 
-1. product_9949 	: furniture_decor | seller_443
-2. product_5630 	: fixed_telephony | seller_1043
-3. product_31762 	: small_appliances | seller_2915
-4. product_29040 	: stationery | seller_1787
-5. product_11817 	: health_beauty | seller_1210
-6. product_16087 	: stationery | seller_668
-7. product_21496 	: fashion_bags_accessories | seller_1277
-8. product_7408 	: housewares | seller_1815
-9. product_8130 	: baby | seller_434
-10. product_9125 	: stationery | seller_157
+| produk        | kategori_produk    | penjual     |
+| -----------   | -----------------  | ---------   |
+| product_9949  | furniture_decor    | seller_443  |
+| product_5630 	| fixed_telephony    | seller_1043 |
+| product_31762 | small_appliances   | seller_2915 |
+| product_29040 | stationery         | seller_1787 |
+| product_11817 | health_beauty      | seller_1210 |
+| product_16087 | stationery         | seller_668  |
+| product_21496 | fashion_bags_accessories | seller_1277 |
+| product_7408 	| housewares         | seller_1815 |
+| product_8130 	| baby               | seller_434  |
+| product_9125 	| stationery         | seller_157  |
 
 ## Evaluation
 Setelah model berhasil dibuat, akan dilakukan evaluasi dengan menggunakan metrik evaluasi untuk memvalidasi performa model. 
