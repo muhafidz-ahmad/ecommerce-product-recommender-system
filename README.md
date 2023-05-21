@@ -179,12 +179,12 @@ Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pem
 
 ### Data Preparation
 Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digunakan untuk membuat sistem rekomendasi. Dataset ini memiliki total 6 kolom sebagai berikut:
-* product_id
-* product_category_name
-* price
-* review_score
-* sold
-* seller_id
+* product_id : id produk unik (string)
+* product_category_name : nama kategori produk (string)
+* price : harga produk (int)
+* review_score : skor review produk (float)
+* sold : jumlah produk terjual (int)
+* seller_id : id penjuan (string)
 
 Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan diganti dengan nilai 0 agar bisa dimasukan ke dalam perhitungan sistem rekomendasi.
 
@@ -245,13 +245,32 @@ Berikut ini adalah contoh top 10 rekomendasi dari salah satu pengguna.
 10. product_9125 	: stationery | seller_157
 
 ## Evaluation
-Pada pendekatan Content-Based Filtering, akan dilihat hasil dari hasil rekomendasi pada contoh di subbab sebelumnya. Contoh di atas adalah mencari rekomendasi produk dengan keyword *"product_3248"*. Dimana product tersebut memiliki kategori *bed_bath_table*, penjual *seller_2174*, harga 24.9, skor review 3.9, dan jumlah terjual sebanyak 7 buah. Hasil rekomendasi dari *keyword* di atas diperoleh 5 rekomendasi dengan kategori produk yang sama. Sistem rekomendasi dengan Content-Based Filtering sudah berjalan dengan baik.
+Setelah model berhasil dibuat, akan dilakukan evaluasi dengan menggunakan metrik evaluasi untuk memvalidasi performa model. 
 
+### Content-Based Filtering
+Pada pendekatan Content-Based Filtering, akan digunakan metrik evaluasi *precision*.
+
+*Precision* adalah metrik evaluasi yang digunakan untuk mengukur sejauh mana sistem rekomendasi mampu memberikan rekomendasi yang relevan dan tepat kepada pengguna. Precision menggambarkan persentase item rekomendasi yang relevan dari keseluruhan item yang direkomendasikan. Presisi dapat dihitung menggunakan rumus berikut:
+
+$$ precision = {TP \over TP + FP} $$
+
+dimana:
+* TP (*True Positive*) : jumlah item rekomendasi yang relevan yang benar-benar dipilih oleh pengguna
+* FP (*False Positive*) : jumlah item rekomendasi yang tidak relevan yang dipilih oleh pengguna.
+
+Digunakan 3 pencarian produk secara acak, yaitu:
+1. *"product_3248"*. Dari 20 rekomendasi yang diberikan semuanya relevan. Sehingga nilai presisinya 100%.
+2. *"product_453"*. Dari 20 rekomendasi yang diberikan semuanya relevan. Sehingga nilai presisinya 100%.
+3. *"product_31234"*. Dari 20 rekomendasi yang diberikan semuanya relevan. Sehingga nilai presisinya 100%.
+
+Dari hasil pencarian produk di atas, diperoleh nilai akurasi 100% yang berarti semua hasil pencarian memperoleh rekomendasi yang relevan.
+
+### Collaborative Filtering
 Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
 
 $$ RMSE = \sqrt{\sum ({\hat{y}i - yi})^{2} \over {n}} $$
 
-Dimana:
+dimana:
 * y topi = rating prediksi
 * y = rating sebenarnya
 * n = jumlah data
@@ -260,8 +279,13 @@ Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagai ber
 * *root_mean_squared_error* : 0.0427
 * *val_root_mean_squared_error* : 0.3353
 
+### Analisis Hasil
+Dari nilai metrik evaluasi terlihat model memiliki kemampuan rekomendasi yang baik. Terlebih pada pendekatan *content-based filtering* yang presisinya bisa mencapai 100% yang artinya produk yang direkomendasikan sangat relevan dengan produk yang sedang dicari. Ini juga menjadi kelebihan pendekatan *content-based filtering* yang bisa secara tepat memberikan rekomendasi barang yang spesifik. Namun kelemahannya adalah produk yang ditampilkan tidak luas, dengan kata lain, kita tidak akan menemukan produk lainnya yang tidak sesuai dengan *keyword* yang kita cari.
+
+Namun untuk pendekatan *collaborative filtering*, memang terlihat bahwa produk yang direkomendasikan cukup campur-campur. Karena tujuan dari pendekatan ini tidak hanya mencari produk dengan kategori yang sama, tetapi juga kategori lainnya yang kemungkinan disukai oleh pengguna. Ini menjadi kelebihan pendekatan *collaborative filtering* yang bisa menemukan produk lain yang mungkin sebelumnya kita belum ketahui, tetapi mungkin kita akan menyukainya. Kelemahannya adalah rekomendasi yang diberikan bisa jadi sedikit *random* karena produk yang direkomendasikan adalah berdasarkan tren yang sedang disukai pengguna lain.
+
 ## Conclusion
-Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan 5 rekomendasi produk dengan kategori yang sama. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353. Namun ketika dicoba dengan contoh pengguna tertentu, rekomendasi yang diberikan terlihat cukup abstrak.
+Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan nilai evaluasi precision hingga 100% pada contoh 3 produk yang diuji. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353. Namun ketika dicoba dengan contoh pengguna tertentu, rekomendasi yang diberikan terlihat cukup beragam.
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
