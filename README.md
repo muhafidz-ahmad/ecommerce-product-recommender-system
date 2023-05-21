@@ -93,7 +93,7 @@ Gambar 1. Skema dataset *e-commerce Olist*
   * product_category_name: nama kategori produk dalam bahasa portugis
   * product_category_name_english: nama kategori produk dalam bahasa Inggris
 
-Namun pada proyek ini, hanya akan digunakan 6 skema dataset, yaitu:
+Namun pada proyek ini, hanya akan digunakan 7 skema dataset, yaitu:
 1. olist_order_customers_dataset.csv
 2. olist_order_items_dataset.csv
 3. olist_order_reviews_dataset.csv
@@ -119,11 +119,13 @@ Kemudian pada dataset *olist_order_items_dataset.csv* (selanjutnya akan ditulis 
 * *freight_value* : 6999 nilai unik
 Pada dataset order item ini terdapat kolom harga dengan statistik sebagai berikut:
 
+Tabel 1. Statistik harga order
+
 |         | price       |
 |-------- |------------ |
 | mean    | 120.653739  |
 | std     | 183.633928  |
-| min     | 0.850000	  |
+| min     | 0.850000	   |
 | 25%     | 39.900000	  |
 | 50%     | 74.990000   |
 | 75%     | 134.900000  |
@@ -141,7 +143,38 @@ Kelima, dataset *olist_seller_dataset.csv* (selanjutnya akan ditulis dataset sel
 Terakhir, dataset *olist_products_dataset.csv* yang berisi data informasi produk dan *product_category_name_translation.csv* sebagai kamus nama kategori produk dari Bahasa Portugis ke Bahasa Inggris. Sayangnya, dataset produk ini tidak memiliki nama produk dan deskripsi produk yang eksplisit. Sehingga sistem rekomendasi yang akan dibuat akan digunakan *product_id* untuk menunjukan produk tertentu. Terdapat 73 kategori produk pada dataset ini.
 
 ## Data Preparation
+Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pembuatan membaca nama produk dan seller karena nama produk dan seller tidak tersedia.
 ### Data Preprocessing
+
+**Membuat Nama Produk dan Seller Buatan**
+* Nama produk dan *seller* akan dibuat dengan format *product_(number)* untuk nama produk, dan format *seller_(number)* untuk nama *seller*. 
+
+**Harga Produk**
+* Karena harga produk terkadang berubah karena ada diskon, maka akan diambil harga rata-rata dari dataset order item untuk menentukan harga produk. Kemudian data harga produk ini dimasukan ke dataset *products*.
+
+**Review dan Jumlah Produk Terjual**
+* Digabungkan data review produk ke dalam dataset *products*.
+* Dibuat juga kolom baru berisi informasi jumlah barang terjual yang kemudian dimasukan juga ke dalam dataset *products*.
+
+**Nama Seller ke Products**
+* Tentunya, dimasukan juga nama seller ke dalam dataset *products*.
+
+**Respons Time Order**
+* Ditambahkanj juga kolom baru yang berisi informasi kecepatan *seller* dalam merespon sebuah pesanan.
+
+### Data Preparation
+Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digunakan untuk membuat sistem rekomendasi. Dataset ini memiliki total 6 kolom sebagai berikut:
+* product_id
+* product_category_name
+* price
+* review_score
+* sold
+* seller_id
+
+Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan diganti dengan nilai 0 agar bisa dimasukan ke dalam perhitungan sistem rekomendasi.
+
+## Model Development
+
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
