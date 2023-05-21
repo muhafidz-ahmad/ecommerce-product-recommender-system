@@ -182,7 +182,7 @@ Pertama, membangun matriks TF-IDF dari kategori produk. Matriks ini akan merepre
 
 Setelah matriks TF-IDF terbentuk, langkah berikutnya adalah menghitung cosine similarity antara setiap pasangan produk. Cosine similarity mengukur kesamaan antara dua vektor dengan mengukur sudut antara vektor-vektor tersebut. Semakin kecil sudut antara vektor-vektor, semakin mirip produk-produk tersebut. Untuk menghitung cosine similarity, dapat digunakan formula cosine similarity:
 
-$$ cosine_similarity = {A . B} \over {||A|| ||B||} $$
+$$ cosine_similarity = {{A . B} \over {||A|| ||B||}} $$
 
 Dengan menghitung cosine similarity antara semua pasangan produk, kita dapat memperoleh matriks similarity antara produk-produk dalam dataset. Nilai cosine similarity ini dapat digunakan untuk menemukan produk-produk yang paling mirip satu sama lain. Semakin tinggi nilai cosine similarity antara dua produk, semakin mirip kedua produk tersebut.
 
