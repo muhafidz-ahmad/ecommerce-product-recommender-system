@@ -25,7 +25,123 @@ Untuk mencapai tujuan di atas, akan digunakan dua pendekatan dalam sistem rekome
 2. *Collaborative Filtering*, yang dapat memberikan rekomendasi berdasarkan preferensi konsumen atau pelanggan yang mirip.
 
 ## Data Understanding
+Data yang akan digunakan untuk project ini adalah data dari Kaggle yang berisi merupakan data informasi *custumer*, produk, dan *review* dari salah satu platform *e-commerce* bernama *Olist*. Data dapat diunduh melalui [tautan berikut].(https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). Data ini telah diproses oleh *publisher* sehingga data ini tidak mengambil privasi konsumen maupun penjual dari *e-commerce* tersebut.
 
+Dataset ini terdiri dari 9 skema dataset, diantaranya:
+
+![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/426dec64-f6c4-4df4-8f1d-fd7f945f1e91)
+Gambar 1. Skema dataset *e-commerce Olist*
+
+1. olist_customers_dataset.csv
+  * customer_id: id unik pelanggan
+  * customer_unique_id: id unik pelanggan (anonim)
+  * customer_zip_code_prefix: kode pos pelanggan
+  * customer_city: kota pelanggan
+  * customer_state: negara bagian pelanggan
+2. olist_geolocation_dataset.csv
+  * geolocation_zip_code_prefix: kode pos lokasi
+  * geolocation_lat: latitude lokasi
+  * geolocation_lng: longitude lokasi
+  * geolocation_city: kota lokasi
+  * geolocation_state: negara bagian lokasi
+3. olist_order_items_dataset.csv
+  * order_id: id unik pesanan
+  * order_item_id: id unik item pesanan
+  * product_id: id unik produk
+  * seller_id: id unik penjual
+  * shipping_limit_date: tanggal batas pengiriman
+  * price: harga produk
+  * freight_value: harga pengiriman
+4. olist_order_payments_dataset.csv
+  * order_id: id unik pesanan
+  * payment_sequential: urutan pembayaran dalam satu pesanan
+  * payment_type: jenis pembayaran (boleto atau kartu kredit)
+  * payment_installments: jumlah cicilan pembayaran
+  * payment_value: nilai pembayaran
+5. olist_order_reviews_dataset.csv
+  * review_id: id unik ulasan
+  * order_id: id unik pesanan
+  * review_score: skor ulasan dengan range dari 1 sampai 5
+  * review_comment_title: judul ulasan dari customer dalam bahasa portugis
+  * review_creation_date: tanggal dibuatnya ulasan
+  * review_answer_timestamp: menunjukkan stempel waktu jawaban survei kepuasan
+6. olist_orders_dataset.csv
+  * order_id: id unik pesanan
+  * customer_id: id unik pelanggan
+  * order_status: status pesanan (dibayar, dikirim, selesai)
+  * order_purchase_timestamp: waktu pembelian pesanan oleh pelanggan (UTC)
+  * order_approved_at: waktu persetujuan pesanan oleh penjual (UTC)
+  * order_delivered_carrier_date: waktu pengiriman oleh kurir (UTC)
+  * order_delivered_customer_date: waktu pengiriman ke pelanggan (UTC)
+  * order_estimated_delivery_date: waktu estimasi pengiriman ke pelanggan (UTC)
+7. olist_products_dataset.csv
+  * product_id: id unik produk
+  * product_category_name: nama kategori produk dalam bahasa portugis
+  * product_name_length: jumlah karakter yang diekstrak dari nama produk
+  * product_description_length: jumlah karakter yang diekstrak dari deskripsi produk
+  * product_photos_qty: jumlah foto produk yang dipublish
+  * product_weight_g: berat produk dalam satuan gram
+  * product_length_cm: ukuran panjang produk dalam satuan cm
+  * product_height_cm: ukuran tinggi produk dalam satuan cm
+  * product_width_cm: ukuran leabr produk dalam satuan cm
+8. olist_sellers_dataset.csv:
+  * seller_id: id unik penjual
+  * seller_zip_code_prefix: kode pos penjual
+  * seller_city: kota penjual
+  * seller_state: negara bagian penjual
+9. product_category_name.csv
+  * product_category_name: nama kategori produk dalam bahasa portugis
+  * product_category_name_english: nama kategori produk dalam bahasa Inggris
+
+Namun pada proyek ini, hanya akan digunakan 6 skema dataset, yaitu:
+1. olist_order_customers_dataset.csv
+2. olist_order_items_dataset.csv
+3. olist_order_reviews_dataset.csv
+4. olist_orders_dataset.csv
+5. olist_seller_dataset.csv
+6. olist_products_dataset.csv
+7. product_category_name_translation.csv
+
+Secara umum, kondisi data sudah bersih dari data duplikat, walau jika dieksplorasi lebih dalam, terdapat beberapa skema dataset yang memiliki data yang hilang karena kondisi tertentu.
+
+### Exploratory Data Analysis
+Pada dataset *olist_order_customers_dataset.csv* (selanjutnya akan ditulis dataset customer) memiliki kolom kode pos, kota, dan negara bagian dari konsumen. Namun pada proyek ini, hanya akan digunakan informasi kota konsumen saja. Sehingga datset customer ini tersisa 3 kolom, yaitu *customer_id*, *customer_unique_id*, dan *customer_city*. Masing-masing kolom tersebut memiliki jumlah nilai unik sebagai berikut:
+* *customer_id* : 99441 nilai unik
+* *customer_unique_id* : 96096 nilai unik
+* *customer_city* : 4119 nilai unik
+
+Kemudian pada dataset *olist_order_items_dataset.csv* (selanjutnya akan ditulis dataset order item) memiliki total 6 kolom, dengan jumlah nilai unik sebagai berikut:
+* *order_id* : 98666 nilai unik
+* *order_item_id* : 21 nilai unik
+* *product_id* : 32951 nilai unik
+* *seller_id* : 3095 nilai unik
+* *price* : 5968 nilai unik
+* *freight_value* : 6999 nilai unik
+Pada dataset order item ini terdapat kolom harga dengan statistik sebagai berikut:
+
+|         | price       |
+|-------- |------------ |
+| mean    | 120.653739  |
+| std     | 183.633928  |
+| min     | 0.850000	  |
+| 25%     | 39.900000	  |
+| 50%     | 74.990000   |
+| 75%     | 134.900000  |
+| max     | 6735.000000	|
+
+Selanjutnya pada dataset *olist_order_reviews_dataset.csv* (selanjutnya akan ditulis dataset order review) memiliki 7 kolom, dua di antaranya adalah *review_comment_title* dan *review_comment_message* yang memiliki banyak nilai yang hilang. Ini karena memang terkadang pembeli ketika memberi review tidak memiliki waktu untuk menulis ulasan yang detail, sehingga hanya memberi skor saja. Oleh karena itu, kedua kolom tersebut dihapus saja. 
+Skor review yang ada pada dataset ini adalah dalam rentang 1 sampai dengan 5.
+
+Keempat, pada dataset *olist_orders_dataset.csv* (selanjutnya akan dituis dataset orders) memiliki 8 kolom dengan cukup banyak nilai yang hilang pada kolom *order_approved_at*, *order_delivered_carrier_date*, dan *order_delivered_customer_date* karena bisa saja kondisi ketika data ini diambil, terdapat status pembelian yang menyebabkan data pada kolom tersebut masih kosong. Namun untungmya, kolom tersebut tidak terpakai untuk membuat sistem rekomendasi, sehingga akan dihapus. Kemudian, untuk membuat sistem rekomendasi pada proyek ini juga hanya akan menggunakan data dengan status order sudah selesai atau *delivered*.
+
+Kelima, dataset *olist_seller_dataset.csv* (selanjutnya akan ditulis dataset seller) kondisinya sudah sangat bersih. Sama seperti dataset customer, informasi seller juga hanya akan menggunakan informasi kota saja. Adapun nilai unik pada kolom dataset seller ini adalah:
+* *seller_id* : 3095 nilai unik
+* *seller_city* : 611 nilai unik
+
+Terakhir, dataset *olist_products_dataset.csv* yang berisi data informasi produk dan *product_category_name_translation.csv* sebagai kamus nama kategori produk dari Bahasa Portugis ke Bahasa Inggris. Sayangnya, dataset produk ini tidak memiliki nama produk dan deskripsi produk yang eksplisit. Sehingga sistem rekomendasi yang akan dibuat akan digunakan *product_id* untuk menunjukan produk tertentu. Terdapat 73 kategori produk pada dataset ini.
+
+## Data Preparation
+### Data Preprocessing
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
