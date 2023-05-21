@@ -257,7 +257,7 @@ Output dari pendekatan ini adalah daftar produk rekomendasi untuk setiap pelangg
 
 Tabel 4. Top 10 rekomendasi dari salah satu pengguna.
 
-| produk        | kategori_produk    | penjual     |
+| product       | product_category_name    | seller_id     |
 | -----------   | -----------------  | ---------   |
 | product_9949  | furniture_decor    | seller_443  |
 | product_5630 	| fixed_telephony    | seller_1043 |
