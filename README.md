@@ -230,12 +230,12 @@ Dimana:
 * y = rating sebenarnya
 * n = jumlah data
 
-Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagaim berikut:
+Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagai berikut:
 * *root_mean_squared_error* : 0.0427
 * *val_root_mean_squared_error* : 0.3353
 
 ## Conclusion
-Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan 5 rekomendasi produk dengan kategori yang sama. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353 yang merupakan nilai yang cukup bagus.
+Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering. Pada Content-Based Filtering, sistem berhasil memberikan 5 rekomendasi produk dengan kategori yang sama. Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353. Namun ketika dicoba dengan contoh pengguna tertentu, rekomendasi yang diberikan terlihat cukup abstrak.
 
 ## Referensi
 [1] [X. Zhao, "A Study on E-commerce Recommender System Based on Big Data," 2019 IEEE 4th International Conference on Cloud Computing and Big Data Analysis (ICCCBDA), Chengdu, China, 2019, pp. 222-226, doi: 10.1109/ICCCBDA.2019.8725694.](https://ieeexplore.ieee.org/abstract/document/8725694)
