@@ -108,7 +108,8 @@ Namun pada proyek ini, hanya akan digunakan 7 skema dataset, yaitu:
 
 Secara umum, kondisi data sudah bersih dari data duplikat, walau jika dieksplorasi lebih dalam, terdapat beberapa skema dataset yang memiliki data yang hilang karena kondisi tertentu.
 
-### Exploratory Data Analysis
+**Exploratory Data Analysis**
+
 Pada dataset *olist_order_customers_dataset.csv* (selanjutnya akan ditulis dataset customer) memiliki kolom kode pos, kota, dan negara bagian dari konsumen. Namun pada proyek ini, hanya akan digunakan informasi kota konsumen saja. Sehingga datset customer ini tersisa 3 kolom, yaitu *customer_id*, *customer_unique_id*, dan *customer_city*. Terdapat 96096 pelanggan unik yang tersebar di 4119 kota.
 
 ![image](https://github.com/muhafidz-ahmad/ecommerce-product-recommender-system/assets/115754250/0f667060-5439-412a-862c-a2a05d02cbd0)
