@@ -1,5 +1,5 @@
 # Laporan Proyek Machine Learning - Muhafidz Ahmad Halim
-## Project Overview
+## 1. Project Overview
 *E-commerce* adalah salah satu inovasi di era modern ini yang memiliki fungsi untuk membantu konsumen membeli barang-barang yang mereka butuhkan dengan mudah melalui gawai mereka. Selain membantu konsumen, *e-commerce* juga membantu banyak penjual dalam menjual barangnya dengan lebih mudah. Dengan *e-commerce*, penjual dapat menjual barang tidak hanya terbatas kepada konsumen di daerahnya saja, tetapi penjual dapat menjual produknya ke konsumen di seluruh dunia.
 
 Saat ini telah banyak sekali barang-barang yang dijual di *e-commerce*. Tak jarang barang-barang tersebut terdapat barang yang dijual oleh seorang penipu yang dapat merugikan konsumen. Oleh karena itu, pemilik *platform e-commerce* perlu memberikan rasa aman dan rasa nyaman kepada para konsumen dengan memfilter barang-barang yang direkomendasikan kepada user.
@@ -10,24 +10,24 @@ Terdapat dua pendekatan yang umum digunakan untuk membuat sistem rekomendasi, ya
 
 Sistem rekomendasi di *ecommerce* telah beberapa kali dilakukan penelitian, terutama dengan yang berdasarkan big data [1]. Salah satu penelitian terbaru dalam pengembangan sistem rekomendasi ini adalah dengan menggunakan *AutoML* [2].
 
-## Business Understanding
-### Problem Statements
+## 2. Business Understanding
+### 2.1. Problem Statements
 Dari kondisi yang telah dijelaskan di atas, akan dibuat sebuah sistem rekomendasi untuk menjawab permasalahan berikut:
 * Bagaimana cara memberikan rekomendasi produk yang relevan kepada pengguna berdasarkan preferensi dan perilaku mereka?
 * Bagaimana sistem rekomendasi dapat membantu meningkatkan pengalaman belanja pengguna dan mendorong penjualan?
 * Bagaimana kita dapat memanfaatkan informasi dari pengguna, produk, dan riwayat pembelian untuk menghasilkan rekomendasi yang personal dan akurat?
 
-### Goals
+### 2.2. Goals
 * Membuat sistem rekomendasi yang bisa memberikan rekomendasi produk yang relevan dengan preferensi pengguna.
 * Mengetahui kemampuan sistem rekomendasi dalam memberikan rekomendasi produk kepada pengguna.
 * Mengoptimalkan pemanfaatan data pelanggan dan produk yang ada dalam platform *e-commerce* untuk membuat sistem rekomendasi lebih akurat dan presisi.
 
-### Solution Approach
+### 2.3. Solution Approach
 Untuk mencapai tujuan di atas, akan digunakan dua pendekatan dalam sistem rekomendasi kami, yaitu:
 1. *Content-Based Filtering*, yang dapat memberikan rekomendasi produk yang memiliki kesamaan konden dengan produk yang disukai atau dicari oleh konsumen.
 2. *Collaborative Filtering*, yang dapat memberikan rekomendasi berdasarkan preferensi konsumen atau pelanggan yang mirip.
 
-## Data Understanding
+## 3. Data Understanding
 Data yang akan digunakan untuk project ini adalah data dari Kaggle yang berisi merupakan data informasi *custumer*, produk, dan *review* dari salah satu platform *e-commerce* bernama *Olist*. Data dapat diunduh melalui [tautan berikut].(https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). Data ini telah diproses oleh *publisher* sehingga data ini tidak mengambil privasi konsumen maupun penjual dari *e-commerce* tersebut.
 
 Dataset ini terdiri dari 9 skema dataset, diantaranya:
@@ -159,10 +159,10 @@ Terakhir, dataset *olist_products_dataset.csv* yang berisi data informasi produk
 
 Gambar 5. Top 10 kategori produk
 
-## Data Preparation
-### 1. Content-Based Filtering
+## 4. Data Preparation
+### 4.1. Content-Based Filtering
 Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pembuatan membaca nama produk dan seller karena nama produk dan seller tidak tersedia.
-#### Data Preprocessing
+#### 4.1.1. Data Preprocessing
 
 **Membuat Nama Produk dan Seller Buatan**
 * Nama produk dan *seller* akan dibuat dengan format *product_(number)* untuk nama produk, dan format *seller_(number)* untuk nama *seller*. 
@@ -180,7 +180,7 @@ Persiapan data akan dimulai dari data preprocessing, untuk mempermudah dalam pem
 **Respons Time Order**
 * Ditambahkanj juga kolom baru yang berisi informasi kecepatan *seller* dalam merespon sebuah pesanan.
 
-#### Data Preparation
+#### 4.1.2. Data Preparation
 Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digunakan untuk membuat sistem rekomendasi. Dataset ini memiliki total 6 kolom sebagai berikut:
 * product_id : id produk unik (string)
 * product_category_name : nama kategori produk (string)
@@ -191,7 +191,7 @@ Dari hasil *preprocessing* di atas, diperoleh dataset *products* yang akan digun
 
 Terdapat nilai yang hilang pada *review_score*. Nilai yang kosong tersebut akan diganti dengan nilai 0 agar bisa dimasukan ke dalam perhitungan sistem rekomendasi.
 
-### Collaborative Filtering
+### 4.2. Collaborative Filtering
 Data yang digunakan untuk membuat sistem rekomendasi menggunakan *collaborative filtering* merupakan gabungan dari beberapa skema data yang diperlukan dan menyisakan kolom-kolom berikut:
 * *product_id*
 * *seller_id*
@@ -212,10 +212,10 @@ Kemudian, fitur-fitur yang akan digunakan untuk sistem rekomendasi akan di-encod
 
 Terakhir data dipecah menjadi data *training* dan data *testing* dengan rasio 80%:20%. Fitur prediktor yang digunakan adalah *customer* dan *product*. Fitur targetnya adalah *review_score*.
 
-## Model Development
+## 5. Model Development
 Proyek ini menyajikan dua solusi rekomendasi dengan menggunakan algoritma yang berbeda, yaitu *Content-Based Filtering* dan *Collaborative Filtering*.
 
-### Content-Based Filtering
+### 5.1. Content-Based Filtering
 Dalam pendekatan ini, digunakan metode TF-IDF dan Cosine Similarity untuk memperoleh rekomendasi yang relevan.
 
 Pertama, membangun matriks TF-IDF dari kategori produk. Matriks ini akan merepresentasikan setiap produk dalam dataset sebagai vektor numerik berdasarkan frekuensi kata dalam kategori produk tersebut. TF-IDF mengukur seberapa penting suatu kata dalam sebuah dokumen atau konteks. Nilai TF-IDF tinggi menunjukkan kata yang spesifik dan relevan untuk dokumen tersebut. Langkah pertama dalam pembangunan matriks TF-IDF adalah menghitung Term Frequency (TF), yaitu frekuensi kata dalam deskripsi produk. Selanjutnya, perlu dihitung Inverse Document Frequency (IDF), yaitu kebalikan dari frekuensi kata di seluruh dokumen. Ini mengurangi bobot kata-kata yang umum dan meningkatkan bobot kata-kata yang jarang muncul. Akhirnya, matriks TF-IDF terbentuk dengan mengalikan nilai TF dengan nilai IDF. Matriks ini akan menjadi representasi numerik dari kategori produk dalam dataset.
@@ -244,7 +244,7 @@ Tabel 2. Top 5 rekomendasi dengan Content-Based Filtering
 | product_19127 | bed_bath_table        | seller_1630 | 34.90   | 4.0 | 2 |
 | product_29998 | bed_bath_table        | seller_2340 | 52.99   | 4.0 | 1 |
 
-### Collaborative Filtering
+### 5.2. Collaborative Filtering
 Digunakan model RecommerderNet berbasis TensorFlow untuk mempelajari pola preferensi pelanggan dan interaksi mereka dengan produk. Model ini menggunakan embedding untuk merepresentasikan pelanggan dan produk. Dengan menggabungkan embedding tersebut, kami dapat memprediksi preferensi pelanggan terhadap produk tertentu.
 
 Berbeda dengan pendekatan *Content-Based Filtering* yang hanya menggunakan data informasi tentang produk saja, pendekatan ini akan menggunakan data pelanggan juga.
@@ -270,10 +270,10 @@ Tabel 3. Top 10 rekomendasi dari salah satu pengguna.
 | product_8130 	| baby               | seller_434  |
 | product_9125 	| stationery         | seller_157  |
 
-## Evaluation
+## 6. Evaluation
 Setelah model berhasil dibuat, akan dilakukan evaluasi dengan menggunakan metrik evaluasi untuk memvalidasi performa model. 
 
-### Content-Based Filtering
+### 6.1. Content-Based Filtering
 Pada pendekatan Content-Based Filtering, akan digunakan metrik evaluasi *precision*.
 
 *Precision* adalah metrik evaluasi yang digunakan untuk mengukur sejauh mana sistem rekomendasi mampu memberikan rekomendasi yang relevan dan tepat kepada pengguna. Precision menggambarkan persentase item rekomendasi yang relevan dari keseluruhan item yang direkomendasikan. Presisi dapat dihitung menggunakan rumus berikut:
@@ -291,7 +291,7 @@ Digunakan 3 pencarian produk secara acak, yaitu:
 
 Dari hasil pencarian produk di atas, diperoleh nilai akurasi 100% yang berarti semua hasil pencarian memperoleh rekomendasi yang relevan.
 
-### Collaborative Filtering
+### 6.2. Collaborative Filtering
 Pada pendekatan Collaborative Filtering, digunakan metrik evaluasi Root Mean Squared Error (RMSE). RMSE mengukur seberapa baik model Collaborative Filtering dalam memprediksi preferensi atau rating yang akan diberikan oleh pengguna pada item yang belum mereka sukai. RMSE mengukur perbedaan antara rating yang diprediksi oleh model dan rating yang sebenarnya oleh pengguna. Rumus untuk menghitung RMSE adalah sebagai berikut:
 
 $$ RMSE = \sqrt{\sum ({\hat{y}i - yi})^{2} \over {n}} $$
@@ -305,19 +305,19 @@ Dengan proses training sebanyak 100 epochs, diperoleh nilai evaluasi sebagai ber
 * *root_mean_squared_error* : 0.0427
 * *val_root_mean_squared_error* : 0.3353
 
-### Analisis Hasil
+### 6.3. Analisis Hasil
 Dari nilai metrik evaluasi terlihat model memiliki kemampuan rekomendasi yang baik. Terlebih pada pendekatan *content-based filtering* yang presisinya bisa mencapai 100% yang artinya produk yang direkomendasikan sangat relevan dengan produk yang sedang dicari. Ini juga menjadi kelebihan pendekatan *content-based filtering* yang bisa secara tepat memberikan rekomendasi barang yang spesifik. Namun kelemahannya adalah produk yang ditampilkan tidak luas, dengan kata lain, kita tidak akan menemukan produk lainnya yang tidak sesuai dengan *keyword* yang kita cari.
 
 Namun untuk pendekatan *collaborative filtering*, memang terlihat bahwa produk yang direkomendasikan cukup campur-campur. Karena tujuan dari pendekatan ini tidak hanya mencari produk dengan kategori yang sama, tetapi juga kategori lainnya yang kemungkinan disukai oleh pengguna. Ini menjadi kelebihan pendekatan *collaborative filtering* yang bisa menemukan produk lain yang mungkin sebelumnya kita belum ketahui, tetapi mungkin kita akan menyukainya. Kelemahannya adalah rekomendasi yang diberikan bisa jadi sedikit *random* karena produk yang direkomendasikan adalah berdasarkan tren yang sedang disukai pengguna lain.
 
-## Conclusion
+## 7. Conclusion
 Sistem rekomendasi memberikan performa yang baik dengan pendekatan Content-Based Filtering maupun Collaborative Filtering.
 
 Pada Content-Based Filtering, sistem berhasil memberikan nilai evaluasi precision hingga 100% pada contoh 3 pencarian produk yang diuji.
 
 Pada Collaborative Filtering, diperoleh evaluasi RMSE pada data validasi sebesar 0.3353 dan ketika diuji kepada pengguna, produk yang direkomendasikan beragam berdasarkan tren dari pengguna lain yang memiliki historis minat yang sama.
 
-## Suggestion
+## 8. Suggestion
 Untuk membuat sistem rekomendasi ini lebih baik, dapat digunakan fitur-fitur yang lebih kompleks untuk membuat prediksi rekomendasi. Selain itu, dapat digunakan pula metode sistem rekomendasi yang lebih modern yang dapat membaca berbagai jenis fitur, seperti teks, gambar, hingga video.
 
 ## Referensi
